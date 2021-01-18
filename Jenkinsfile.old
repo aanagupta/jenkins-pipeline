@@ -7,9 +7,6 @@ pipeline {
                 echo 'Building..'
             }
         }
-        stage('Approval Required to Go') {
-          input "Deploy to prod ?"
-        }
         stage('Test') {
             steps {
                 echo 'Testing..'
