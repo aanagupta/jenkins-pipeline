@@ -9,20 +9,13 @@ pipeline {
         }
         stage("Stage with input") {
            steps {
-           def userInput = false
-           script {
-              def userInput = input(id: 'Proceed1', message: 'Promote build?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue:true, description: '', name: 'Please confirm you agree with this']])
-              echo 'userInput: ' + userInput
-
-             if(userInput == true) {
-                echo "This is true"
-              } else {
-                // not do action
-                echo "Action was aborted."
-              }
-            }    
-          }  
-		}
+             script {
+             timeout(time: 15, unit: "MINUTES") {
+             input message: 'Do you want to approve the deploy in production?', ok: 'Yes'
+             }
+             }
+           }
+        }  
         stage('Test') {
             steps {
                 echo 'Testing..'
